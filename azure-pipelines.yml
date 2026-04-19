@@ -68,4 +68,6 @@ stages:
               ScriptType: 'Inline Script'
               InlineScript: |
                 npm install
+                npm install -g http-server
                 npm run build --if-present
+                npm start
