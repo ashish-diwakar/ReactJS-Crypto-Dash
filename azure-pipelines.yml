@@ -8,42 +8,57 @@ trigger:
 
 variables:
 
-  node_version: '24.x'
+  node_version: '22.x'
   build_dir: 'dist'
 
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: '68bc389f-8576-45e9-a8a1-fb45b99822bc'
 
-  # Web app name
-  webAppName: 'CryptoDash'
+   # Web app name
+  webAppName: 'Cryptodashbyashish'
 
   # Environment name
-  environmentName: 'CryptoDash'
+  environmentName: 'webApp'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
-  displayName: Build stage
+  displayName: 'Build Vite React App'
   jobs:
-  - job: Build
+  - job: BuildJob
     displayName: Build
     pool:
       vmImage: $(vmImageName)
 
-    steps:
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
+    steps:          
+      - task: NodeTool@1
+        inputs:
+          version: '$(node_version)'
+        displayName: 'Install Node.js'
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+      - script: |
+          node -v
+          npm -v
+        displayName: 'Check Node version'
+
+      - script: npm install
+        displayName: 'Install dependencies'
+
+      - script: npm run build
+        displayName: 'Build Vite app'
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(build_dir)'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
+
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifact: drop
 
 - stage: Deploy
   displayName: Deploy stage
@@ -60,15 +75,10 @@ stages:
         deploy:
           steps:
           - task: AzureRmWebAppDeployment@4
-            displayName: 'Azure App Service Deploy: CryptoDash'
+            displayName: 'Azure App Service Deploy: Cryptodashbyashish'
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
               WebAppName: $(webAppName)
               packageForLinux: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-              RuntimeStack: 'NODE|24LTS'
-              StartupCommand: 'npm run start'
-              ScriptType: 'Inline Script'
-              InlineScript: |
-                npm run build --if-present
-                npm start
+              #RuntimeStack: 'NODE|22-lts'
