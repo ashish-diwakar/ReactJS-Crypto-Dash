@@ -15,7 +15,7 @@ variables:
   azureSubscription: '68bc389f-8576-45e9-a8a1-fb45b99822bc'
 
    # Web app name
-  webAppName: 'Cryptodashbyashish'
+  webAppName: 'CryptoDash'
 
   # Environment name
   environmentName: 'webApp'
@@ -75,7 +75,7 @@ stages:
         deploy:
           steps:
           - task: AzureRmWebAppDeployment@4
-            displayName: 'Azure App Service Deploy: Cryptodashbyashish'
+            displayName: 'Azure App Service Deploy: CryptoDash'
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
