@@ -45,6 +45,7 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
+  margin-bottom: 60px;
 }
 
 .coin-card {
@@ -155,6 +156,37 @@ a {
 
 .top-nav a:hover {
   color: #4090db;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  gap: 10rem;
+  margin-top: 1rem;
+  background:#000;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.bottom-nav .row{
+  width:100%;
+  margin:1% 0%;
+  padding:0.6% 0%;
+  color:gray;
+  font-size:0.8em;
+}
+.bottom-nav a {
+  color:gray;
+  text-decoration: none;
+  font-weight: bold;
+  width: 33%;
+  transition: color 0.2s ease;
+  padding: 5px 20px;
+}
+
+.bottom-nav a:hover {
+  color: #d5d8da;
 }
 
 /* About Page */

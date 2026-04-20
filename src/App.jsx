@@ -4,6 +4,7 @@ import HomePage from "./pages/home";
 import AboutPage from "./pages/about";
 import ContactPage from "./pages/contact";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import NotFoundPage from "./pages/not-found";
 import CoinDetailsPage from "./pages/coin-details";
 const API_URL = import.meta.env.VITE_COINS_API_URL;
@@ -37,22 +38,6 @@ const App = () => {
     LoadData();
 
   }, [limit]);
-  // useEffect(()=>{
-  //   fetch(API_URL)
-  //   .then((res) => {
-  //     if(!res.ok) throw new Error('Failed to load data');
-  //     return res.json();
-  //   })
-  //   .then((data) => {
-  //     console.log('data: ', data);
-  //     setCoins(data);
-  //     setLoading(false);
-  //   })
-  //   .catch((err) => {
-  //     setError(err.message);
-  //     setLoading(false);
-  //   });
-  // }, []);
 
 
   return ( 
@@ -68,6 +53,7 @@ const App = () => {
       <Route path='/coin/:id' element={<CoinDetailsPage />}></Route>
       <Route path='*' element={<NotFoundPage />}></Route>
     </Routes>   
+    <Footer />
     </> 
   );
 }
